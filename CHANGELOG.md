@@ -9,4 +9,5 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Added robust outlier detection: modified z-scores (MAD/MeanAD), Tukey IQR fences, Hampel filter, typed errors, and CLI.
 - Initial project structure from the factory utility template.
