@@ -1,0 +1,16 @@
+# robust-outliers
+
+> Robust outlier detection with modified z-scores from the median absolute deviation, Tukey fences on inclusive quartiles and a Hampel filter for series, with explicit bounds Python package `trysac-robust-outliers`, import name `robust_outliers`, MIT licensed,
+> Python >= 3.10, no runtime dependencies.
+
+## Docs
+
+- [README](README.md): problem, install, usage example
+- [AGENTS](AGENTS.md): commands, folder map, conventions, limits
+- [Architecture](docs/ARCHITECTURE.md): shape of the package and its public API
+- [Testing](docs/TESTING.md): how to run and extend the tests
+
+## Optional
+
+- [Stack](docs/STACK.md): tools used and discarded
+- [Changelog](CHANGELOG.md): release history
