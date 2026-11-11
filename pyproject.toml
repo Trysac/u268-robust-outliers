@@ -19,6 +19,9 @@ classifiers = [
 ]
 dependencies = []
 
+[project.scripts]
+robust-outliers = "robust_outliers.__main__:main"
+
 [project.urls]
 Homepage = "https://github.com/Trysac/u268-robust-outliers"
 Source = "https://github.com/Trysac/u268-robust-outliers"

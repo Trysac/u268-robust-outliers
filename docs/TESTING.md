@@ -2,28 +2,27 @@
 
 ## Running
 
+From a checkout with the package importable:
+
 ```sh
-uv run pytest --cov=robust_outliers   # tests with coverage report
-uv run python scripts/check.py      # every gate, as CI and the factory run it
+python -m pytest tests/test_robust_outliers.py
 ```
 
 ## Policy
 
-- Branch coverage of `src/robust_outliers` must stay at or above 80 %; the gate fails below it.
-- Tests exercise the public API (`import robust_outliers`) and assert every observable effect:
-  return values, raised exceptions and their messages.
-- Each bug fix starts with a failing test that reproduces it.
-- Tests are deterministic: no network, no wall clock, no dependence on test order.
+The test suite is the single file `tests/test_robust_outliers.py`; there is no `tests/conftest.py` and no conformance marker in the tests. Tests use pytest assertions and `pytest.raises`/`pytest.approx` and do not require a network or an external tool.
 
 ## Tiers
 
-- Local tier (every gate run, coverage measured here): unit and property tests, plus conformance on small
-  fixtures kept in the repository.
-- CI tier: conformance that needs an external tool or a download. Mark them `@pytest.mark.conformance`; `scripts/check.py` deselects them locally
-  (unless `FABRICA_CI=1`). The CI `conformance` job sets `FABRICA_CI=1` and runs the full suite. Tools are installed
-  by the optional `ci/conformance-setup.sh` (bash, CI only; verify every download against a pinned SHA-256), and
-  tagged tests skip cleanly when their tool is missing.
+Only one tier is present: `tests/test_robust_outliers.py` runs locally and uses no downloaded tool.
 
 ## Layout
 
-`tests/test_<module>.py` mirrors each public module. Shared fixtures go in `tests/conftest.py`.
+`tests/test_robust_outliers.py` is the only test file. `tests/__pycache__` is generated Python bytecode.
+
+## Covered tests
+
+- `test_detect_mad_acceptance`, `test_modified_z_scores_acceptance`, `test_detect_iqr_acceptance`: acceptance values for MAD detection, modified z-scores and Tukey IQR fences, including returned bounds.
+- `test_mad_fallback_to_mean_ad`, `test_mad_no_spread_all_same`, `test_modified_z_scores_zeros_when_no_spread`: MAD zero fallback to mean absolute deviation and the all-zero-score case.
+- `test_hampel_acceptance`, `test_hampel_zero_mad_window_flags_spike`, `test_hampel_zero_mad_constant_series`: Hampel filter output, zero-MAD windows and constant series.
+- `test_empty_input_raises`, `test_non_finite_raises_with_index`, `test_bool_invalid_value`, `test_threshold_zero_invalid_options`, `test_invalid_method`, `test_input_too_large`, `test_detect_iqr_single_value`: error codes, invalid values and options, input size limit and the single-value IQR edge case.
